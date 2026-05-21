@@ -2,16 +2,16 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-// Cấu hình Port để chạy (Render yêu cầu dùng process.env.PORT)
-const PORT = process.env.PORT || 8088;
+
+const PORT = process.env.PORT || 10000;
 
 const server = http.createServer((req, res) => {
-    // 1. Định tuyến: Nếu truy cập trang chủ '/', mặc định lấy file index.html
+    
     let filePath = req.url === '/' 
         ? path.join(__dirname, 'public', 'index.html') 
         : path.join(__dirname, 'public', req.url);
 
-    // 2. Xác định kiểu file (Content-Type) để trình duyệt hiểu
+
     const extname = path.extname(filePath);
     let contentType = 'text/html';
     
@@ -30,7 +30,7 @@ const server = http.createServer((req, res) => {
             break;
     }
 
-    // 3. Đọc file từ ổ cứng và trả về cho Client
+  
     fs.readFile(filePath, (error, content) => {
         if (error) {
             if (error.code === 'ENOENT') {
@@ -50,7 +50,7 @@ const server = http.createServer((req, res) => {
     });
 });
 
-// Kích hoạt server lắng nghe
+
 server.listen(PORT, () => {
     console.log(`Server thuần đang chạy tại port: ${PORT}`);
 });
